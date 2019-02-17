@@ -1,8 +1,17 @@
 import sys
 
+# Global variables
 TICKET_PRICE = 10
+SERVICE_CHARGE = 2
+
+# Class variables
 tickets_remaining = 100
 tickets_to_purchase = 0
+
+
+def calculate_price(num_tickets):
+    return (TICKET_PRICE * num_tickets) + SERVICE_CHARGE
+
 
 while tickets_remaining != 0:
     # ----- Project Requirement: 1 -----
@@ -23,15 +32,19 @@ while tickets_remaining != 0:
     # Output the price to the screen.
     valid_purchase = False
     while not valid_purchase:
-        tickets_to_purchase = int(input("How many tickets would you like, {}? ".format(name)))
-        if tickets_to_purchase == 0:
-            print("You must purchase at least one ticket.")
-        elif tickets_remaining < tickets_to_purchase:
-            print("Insufficient tickets. There are {} tickets remaining.".format(tickets_remaining))
+        try:
+            tickets_to_purchase = int(input("How many tickets would you like, {}? ".format(name)))
+            if tickets_remaining < tickets_to_purchase:
+                raise ValueError("Insufficient tickets. There are {} tickets remaining.".format(tickets_remaining))
+        except ValueError as err:
+            print("Error: {}. Please try again. ".format(err))
         else:
-            total_tickets_price = TICKET_PRICE * tickets_to_purchase
-            print("Your total price for the tickets is: ${}".format(total_tickets_price))
-            valid_purchase = True
+            if tickets_to_purchase == 0:
+                print("You must purchase at least one ticket.")
+            else:
+                total_tickets_price = calculate_price(tickets_to_purchase)
+                print("Your total price for the tickets is: ${}".format(total_tickets_price))
+                valid_purchase = True
 
     # ----- Project Requirement: 4 -----
     # Prompt user if they want to proceed. Y/N
