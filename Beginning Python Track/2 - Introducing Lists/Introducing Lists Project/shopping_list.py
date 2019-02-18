@@ -7,6 +7,15 @@ shopping_list = []
 # Add the item to the list
 def add_to_list(item):
     shopping_list.append(item)
+    print("Added! List has {} items.".format(len(shopping_list)))
+
+
+# ------ Project Requirement 1 ------
+# Define a function named show_list that prints all the items in the list
+def show_list():
+    print("Here's your list:")
+    for item in shopping_list:
+        print(item)
 
 
 def show_help():
@@ -14,9 +23,11 @@ def show_help():
     print("""
     Enter 'DONE' to stop adding items.
     Enter 'HELP' for this help.
+    ENTER 'SHOW' to see your current list.
     """)
 
 
+show_help()
 while True:
     new_item = input("> ")
 
@@ -25,6 +36,10 @@ while True:
 
     elif new_item == "HELP":
         show_help()
+        continue
+
+    elif new_item == "SHOW":
+        show_list()
         continue
 
     # Call add_to_list with new_item as an argument
